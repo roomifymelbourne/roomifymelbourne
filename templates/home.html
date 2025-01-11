@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roomify Melbourne</title>
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.3.0/flickity.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        @font-face{
+font-family:myfont;
+src:url(/static/fonts/tommy.otf)
+}
+        body {
+            background-color: #0a1f44;
+            color: #e0e5ec;
+            font-family: myfont;
+        }
+       
+        .navbar {
+            
+            background-color: transparent;
+            padding: 15px;
+            transition: background-color 0.3s ease;
+            
+            
+        }
+
+        .navbar .nav-link {
+            color: #ffffff;
+            font-weight: 500;
+            
+        }
+
+        .navbar .nav-link:hover {
+            color: #47d4ff;
+        }
+
+        .navbar-toggler {
+            border-color: rgba(255, 255, 255, 0.1);
+            
+        }
+
+        .navbar-brand {
+            font-weight: 500;
+            color: #ffffff;
+        }
+        .testimonial-img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover; /* To ensure the image scales properly */
+    border-radius: 50%; /* Make it round */
+    margin-bottom: 15px;
+    border: 3px solid #ff4757; /* Optional: add a border around the image */
+}
+.icon-menu {
+  --gap: 5px;
+  --height-bar: 2.5px;
+  --pos-y-bar-one: 0;
+  --pos-y-bar-three: 0;
+  --scale-bar: 1;
+  --rotate-bar-one: 0;
+  --rotate-bar-three: 0;
+  width: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  cursor: pointer;
+  position: relative;
+  margin-top: 10px;
+  
+  display:none;
+}
+@media (max-width: 767px) {
+            .icon-menu {
+                display: flex; /* Show the icon only on mobile */
+            }
+        }
+
+.bar {
+  position: relative;
+  height: var(--height-bar);
+  width: 100%;
+  border-radius: .5rem;
+  background-color: #d6d6d6;
+}
+
+.bar--1 {
+  top: var(--pos-y-bar-one);
+  transform: rotate(var(--rotate-bar-one));
+  transition: top 200ms 100ms, transform 100ms;
+}
+
+.bar--2 {
+  transform: scaleX(var(--scale-bar));
+  transition: transform 150ms 100ms;
+}
+
+.bar--3 {
+  bottom: var(--pos-y-bar-three);
+  transform: rotate(var(--rotate-bar-three));
+  transition: bottom 200ms 100ms, transform 100ms;
+}
+
+.check-icon:checked + .icon-menu > .bar--1 {
+  transition: top 200ms, transform 200ms 100ms;
+}
+
+.check-icon:checked + .icon-menu > .bar--3 {
+  transition: bottom 200ms, transform 200ms 100ms;
+}
+
+.check-icon:checked + .icon-menu {
+  --pos-y-bar-one: calc(var(--gap) + var(--height-bar));
+  --pos-y-bar-three: calc(var(--gap) + var(--height-bar));
+  --scale-bar: 0;
+  --rotate-bar-one: 45deg;
+  --rotate-bar-three: -45deg;
+}
+
+
+    </style>
+</head>
+<body>
+
+    
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <a class="navbar-brand" href="#">
+                <img src="/static/images/home3.png" style="width:35px;margin-left: 15px;margin-top: 10px;">
+            </a>
+            <input hidden class="check-icon" id="check-icon" name="check-icon" type="checkbox">
+            <label class="icon-menu" for="check-icon" data-toggle="collapse" data-target="#navbarNav">
+                <div class="bar bar--1"></div>
+                <div class="bar bar--2"></div>
+                <div class="bar bar--3"></div>
+            </label>
+    
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto mt-2">
+                    <li class="nav-item"><a class="nav-link" style="margin-left: 20px;" href="">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" style="margin-left: 20px;" href="{% url 'roomifyapp:tandc' %}">T&C</a></li>
+                    <li class="nav-item"><a class="nav-link" style="margin-left: 20px;" href="#">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+        <header style="display:flex;justify-content: center;margin-top: -100px;">
+            <img src="/static/images/logo.png" style="width:400px;">
+        </header>
+        <div style="display:flex;justify-content: center;padding:20px;">
+            <p class="text-center text-white" style="margin-top: -40px;font-weight: bold;">Please Fill Your Details Our Team Will Contact You Soon !!!</p>
+
+        </div>
+        <div class="form-container" style="display: flex;justify-content: center;padding:20px;">
+            
+            <form id="userDetailsForm" method="POST" action="#" style="width:600px;">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <input type="text" name="name" class="form-control" placeholder="Enter your name" required>
+                </div>
+                <div class="mb-3">
+                    <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
+                </div>
+                <div class="mb-3">
+                    <input type="tel" name="phone" class="form-control" placeholder="Enter your phone number" required>
+                </div>
+                <div class="mb-3">
+                    <input type="text" name="university" class="form-control" placeholder="Enter your university" required>
+                </div>
+                <div class="mb-3">
+                    <input type="text" name="city" class="form-control" placeholder="Enter your city" required>
+                </div>
+                <div class="mb-3">
+                    <input type="number" name="rent" class="form-control" placeholder="Enter your rent range" required>
+                </div>
+                <button type="submit" class="btn-submit" style="height:40px; width:100%;background:rgba(0, 0, 0, 0.552);border-radius: 10px;color:white;">Submit</button>
+            </form>
+        </div>
+        <div style="display:flex;justify-content: center;align-items: center;margin: 10px;">
+            <i class="fa-solid fa-phone" style="color:white;font-size: 35px;margin: 20px;"></i>
+            <i class="fa-solid fa-envelope" style="color:white;font-size: 40px;margin: 20px;"></i>
+            <i class="fa-brands fa-whatsapp" style="color:white;font-size: 40px;margin: 20px;"></i>
+        </div>
+        <script>
+           document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('userDetailsForm');
+    form.addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent default form submission
+
+        const formData = new FormData(form);
+
+        fetch("{% url 'roomifyapp:home' %}", {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                Swal.fire({
+                    toast: true,
+                    position: 'top',
+                    icon: 'success',
+                    title: 'Submitted Successfully',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    background: '#000000', // Black background
+                    color: '#ffffff', // White text
+                });
+                form.reset(); // Reset form
+            } else {
+                Swal.fire({
+                    toast: true,
+                    position: 'top',
+                    icon: 'error',
+                    title: data.error || 'Submission Failed',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    background: '#000000', // Black background
+                    color: '#ffffff', // White text
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            Swal.fire({
+                toast: true,
+                position: 'top',
+                icon: 'error',
+                title: 'Submission Failed',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                background: '#000000', // Black background
+                color: '#ffffff', // White text
+            });
+        });
+    });
+});
+
+        </script>
+    <!-- About Us Section -->
+<section id="about-us" style="background-color: #0a1f44; padding: 50px 0;">
+    <div class="container text-center">
+        <h2 class="section-title" style="color: #ffffff; font-weight: 600;">About Us</h2>
+        <p class="section-description" style="color: #ffffff; font-size: 18px; max-width: 800px; margin: 20px auto;">
+            Welcome to <strong>Roomify Melbourne</strong>, your trusted partner in finding the perfect accommodation. We understand that searching for a new home or rental property can be overwhelming, which is why we simplify the process for you. By partnering with a network of trusted rental companies, we offer a curated selection of properties that fit your unique needs and preferences. Whether you’re looking for a cozy apartment, a spacious house, or something in between, our goal is to connect you with the right space at the right price.
+        </p>
+        <p class="section-description" style="color: #ffffff; font-size: 18px; max-width: 800px; margin: 20px auto;">
+            At <strong>Roomify Melbourne</strong>, customer satisfaction is our top priority. Our team of experienced professionals is dedicated to guiding you through every step of your rental journey—from browsing listings to securing a lease. We pride ourselves on providing personalized service, ensuring that your experience is smooth, stress-free, and tailored to your lifestyle. Let us take the hassle out of finding your next home so you can focus on what <strong>really matters</strong>.
+        </p>
+    </div>
+</section>
+
+<!-- Styles for the About Us Section -->
+<style>
+    #about-us {
+        background:transparent; /* Light background */
+        padding: 50px 0; /* Top and bottom padding */
+    }
+
+    .section-title {
+        color: #333;
+        font-weight: 600;
+        font-size: 30px;
+        margin-bottom: 20px;
+    }
+
+    .section-description {
+        color: #555;
+        font-size: 18px;
+        line-height: 1.6;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    @media (max-width: 767px) {
+        .section-title {
+            font-size: 24px;
+        }
+        .section-description {
+            font-size: 16px;
+        }
+    }
+</style>
+
+    <div style="display:flex;justify-content: center;">
+        <button class="shimmer-button" id="quickEnquiryBtn" style="width:200px;height:40px;border-radius: 20px;background: rgba(0, 0, 0, 0.552);color:white;">
+            Quick Enquiry
+        </button>
+    </div>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="enquiryModal" tabindex="-1" aria-labelledby="enquiryModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="background: black;">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="enquiryModalLabel">Quick Enquiry</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="enquiryForm">
+                        <div class="mb-3">
+                            <label for="contact" class="form-label">Please Provide Your Whatsapp Number</label>
+                            <input type="text" class="form-control" id="contact" name="contact" placeholder="(+91)" required>
+                        </div>
+                        <button type="submit" class="shimmer-button" style="width:100%;color:white;height:40px;border-radius: 10px;">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <style>
+        /* Shimmering effect on the button's border */
+        .shimmer-button {
+            position: relative;
+            border: 2px solid transparent;
+            background: rgba(0, 0, 0, 0.552);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+    
+        .shimmer-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.3) 25%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0.3) 75%);
+            animation: shimmer 2s infinite;
+        }
+    
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+    
+        .shimmer-button:hover {
+            background: rgba(0, 0, 0, 0.7);
+        }
+    </style>
+    
+    <script>
+        // Show the modal when the button is clicked
+        document.getElementById("quickEnquiryBtn").addEventListener("click", function () {
+            var myModal = new bootstrap.Modal(document.getElementById('enquiryModal'), {});
+            myModal.show();
+        });
+    
+        // Handle form submission
+        document.getElementById("enquiryForm").addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent form from submitting normally
+            var contact = document.getElementById("contact").value;
+    
+            if (contact.trim() === "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please enter your WhatsApp number.',
+                    toast: true,
+                    position: 'top',
+                    timer: 3000,
+                    showConfirmButton: false,
+                    timerProgressBar: true,
+                });
+            } else {
+                // Send data to the backend using AJAX
+                var formData = new FormData();
+                formData.append("contact", contact);
+    
+                fetch("{% url 'roomifyapp:home' %}", {
+                    method: "POST",
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Thank You!',
+                            text: 'Your enquiry has been received.',
+                            toast: true,
+                            position: 'top',
+                            timer: 3000,
+                            showConfirmButton: false,
+                            timerProgressBar: true,
+                        });
+    
+                        // Close the modal after submission
+                        var myModal = bootstrap.Modal.getInstance(document.getElementById('enquiryModal'));
+                        myModal.hide();
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Something went wrong, please try again.',
+                            toast: true,
+                            position: 'top',
+                            timer: 3000,
+                            showConfirmButton: false,
+                            timerProgressBar: true,
+                        });
+                    }
+                })
+                .catch(error => {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'There was an error submitting your enquiry.',
+                        toast: true,
+                        position: 'top',
+                        timer: 3000,
+                        showConfirmButton: false,
+                        timerProgressBar: true,
+                    });
+                    console.error("Error:", error);
+                });
+            }
+        });
+    </script>
+    
+    <!-- Profile Cards Section -->
+<section id="profile-cards" style="padding: 50px 0;">
+    <div class="container text-center">
+        <h2 class="section-title" style="color: #ffffff; font-weight: 600; margin-bottom: 40px;">Our Team</h2>
+        <div class="row">
+            <!-- Profile Card 1 -->
+            <div class="col-md-4 mb-4">
+                <div class="card" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                    <div class="card-body">
+                        <h5 class="card-title">Joyal George</h5>
+                        <p class="card-text">Email: joyalgeorgepbvr@gmail.com</p>
+                       
+                        <button class="btn btn-primary" style="width: 100%; border-radius: 20px;">Contact</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Profile Card 2 -->
+            <div class="col-md-4 mb-4">
+                <div class="card" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                    <div class="card-body">
+                        <h5 class="card-title">Aman Kaleekkal Niyas</h5>
+                        <p class="card-text">Email:aman.niyas@yahoo.com</p>
+                       
+                        <button class="btn btn-primary" style="width: 100%; border-radius: 20px;">Contact</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Profile Card 3 -->
+            <div class="col-md-4 mb-4">
+                <div class="card" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                    <div class="card-body">
+                        <h5 class="card-title">Akhilas Thanduparakkal
+                        </h5>
+                        <p class="card-text">Email: akhilasakhilastk@gmail.com</p>
+                       
+                        <button class="btn btn-primary" style="width: 100%; border-radius: 20px;">Contact</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Styles for Profile Cards Section -->
+<style>
+    #profile-cards {
+        padding: 30px 0;
+        background-color: #0a1f44; /* Light background */
+    }
+
+    .section-title {
+        color: #333;
+        font-weight: 600;
+        font-size: 30px;
+    }
+
+    .card {
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+   
+    .card-body {
+        padding: 20px;
+        background-color: black;
+        border-radius: 10px;
+    }
+
+    .card-title {
+        font-weight: bold;
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .card-text {
+        color: #555;
+        margin-bottom: 15px;
+    }
+
+    .form-control {
+        margin-bottom: 10px;
+    }
+
+    .btn {
+        border-radius: 20px;
+        background-color: #007bff;
+        color: white;
+        font-weight: 600;
+    }
+
+    .btn:hover {
+        background-color: #0056b3;
+    }
+
+    @media (max-width: 767px) {
+        .section-title {
+            font-size: 24px;
+        }
+
+        .card-body {
+            padding: 15px;
+        }
+    }
+</style>
+
+    <!-- Bootstrap JS and Modal Functionality -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    
+<footer style="background-color: #0a1f44; color: white; padding: 40px 0; text-align: center;">
+    <div style="max-width: 1200px; margin: 0 auto;">
+        <p>&copy; 2025 Roomify Melbourne. All rights reserved.</p>
+        
+           
+    </div>
+</footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+          
+            
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <!-- Include Swiper.js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.3.0/flickity.pkgd.min.js"></script>
+        
+        <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        
+        <!-- Bootstrap JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>        
