@@ -153,7 +153,7 @@ src:url(/static/fonts/tommy.otf)
             <img src="/static/images/logo.png" style="width:400px;">
         </header>
         <div style="display:flex;justify-content: center;padding:20px;">
-            <p class="text-center text-white" style="margin-top: -40px;font-weight: bold;">Please Fill Your Details Our Team Will Contact You Soon !!!</p>
+            <p class="text-center text-white" style="margin-top: -40px;font-weight: bold;">Fill Your Details.... We Will Contact You Soon !!!</p>
 
         </div>
         <div class="form-container" style="display: flex;justify-content: center;padding:20px;">
@@ -182,7 +182,6 @@ src:url(/static/fonts/tommy.otf)
             </form>
         </div>
         <div style="display:flex;justify-content: center;align-items: center;margin: 10px;">
-            <i class="fa-solid fa-phone" style="color:white;font-size: 35px;margin: 20px;"></i>
             <i class="fa-solid fa-envelope" style="color:white;font-size: 40px;margin: 20px;"></i>
             <i class="fa-brands fa-whatsapp" style="color:white;font-size: 40px;margin: 20px;"></i>
         </div>
@@ -251,7 +250,7 @@ src:url(/static/fonts/tommy.otf)
     <!-- About Us Section -->
 <section id="about-us" style="background-color: #0a1f44; padding: 50px 0;">
     <div class="container text-center">
-        <h2 class="section-title" style="color: #ffffff; font-weight: 600;">About Us</h2>
+        <h2 class="section-title" style="color: #ffffff; font-weight: 600;">OUR VISION</h2>
         <p class="section-description" style="color: #ffffff; font-size: 18px; max-width: 800px; margin: 20px auto;">
             Welcome to <strong>Roomify Melbourne</strong>, your trusted partner in finding the perfect accommodation. We understand that searching for a new home or rental property can be overwhelming, which is why we simplify the process for you. By partnering with a network of trusted rental companies, we offer a curated selection of properties that fit your unique needs and preferences. Whether you’re looking for a cozy apartment, a spacious house, or something in between, our goal is to connect you with the right space at the right price.
         </p>
@@ -342,7 +341,8 @@ src:url(/static/fonts/tommy.otf)
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, rgba(255, 255, 255, 0.3) 25%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0.3) 75%);
+            
+            background: linear-gradient(90deg, rgba(21, 21, 28, 0.489) 0%, rgba(66, 83, 133, 0.434) 60%, rgba(34, 32, 38, 0.407) 95%);
             animation: shimmer 2s infinite;
         }
     
@@ -382,6 +382,8 @@ src:url(/static/fonts/tommy.otf)
                     timer: 3000,
                     showConfirmButton: false,
                     timerProgressBar: true,
+                    background: '#000000', // Black background
+                    color: '#ffffff', // White text
                 });
             } else {
                 // Send data to the backend using AJAX
@@ -401,12 +403,14 @@ src:url(/static/fonts/tommy.otf)
                         Swal.fire({
                             icon: 'success',
                             title: 'Thank You!',
-                            text: 'Your enquiry has been received.',
+                            text: 'We Will Contact You Soon.',
                             toast: true,
                             position: 'top',
                             timer: 3000,
                             showConfirmButton: false,
                             timerProgressBar: true,
+                            background: '#000000', // Black background
+                            color: '#ffffff', // White text
                         });
     
                         // Close the modal after submission
@@ -422,6 +426,8 @@ src:url(/static/fonts/tommy.otf)
                             timer: 3000,
                             showConfirmButton: false,
                             timerProgressBar: true,
+                            background: '#000000', // Black background
+                            color: '#ffffff', // White text
                         });
                     }
                 })
@@ -435,6 +441,8 @@ src:url(/static/fonts/tommy.otf)
                         timer: 3000,
                         showConfirmButton: false,
                         timerProgressBar: true,
+                        background: '#000000', // Black background
+                        color: '#ffffff', // White text
                     });
                     console.error("Error:", error);
                 });
@@ -506,7 +514,8 @@ src:url(/static/fonts/tommy.otf)
    
     .card-body {
         padding: 20px;
-        background-color: black;
+        background: rgb(21,21,28);
+
         border-radius: 10px;
     }
 
@@ -517,7 +526,7 @@ src:url(/static/fonts/tommy.otf)
     }
 
     .card-text {
-        color: #555;
+        color: #ffffff;
         margin-bottom: 15px;
     }
 
@@ -526,7 +535,7 @@ src:url(/static/fonts/tommy.otf)
     }
 
     .btn {
-        border-radius: 20px;
+        border-radius: 30px;
         background-color: #007bff;
         color: white;
         font-weight: 600;
